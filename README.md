@@ -1,5 +1,4 @@
-# Workshop Java 8
+# Méthode par défaut
 
-Thèmes abordées :
-
-* Méthode par défaut (01-default-method)
+* Importer le projet Maven
+* Compléter les tests unitaires

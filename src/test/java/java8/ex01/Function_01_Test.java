@@ -6,9 +6,6 @@ import org.junit.Test;
 
 import java.util.function.Function;
 
-import static org.hamcrest.Matchers.*;
-import static org.junit.Assert.*;
-
 
 /**
  * Exercice 01 - java.util.function.Function
@@ -33,10 +30,10 @@ public class Function_01_Test {
         // TODO invoquer la fonction intToPerson avec en paramètre l'entier 10.
         Person result = null;
 
-        assertThat(result, hasProperty("firstname", is("first_10")));
-        assertThat(result, hasProperty("lastname", is("last_10")));
-        assertThat(result, hasProperty("age", is(10)));
-        assertThat(result, hasProperty("password", is("pass_10")));
+        assert result.getFirstname().equals("first_10");
+        assert result.getLastname().equals("last_10");
+        assert result.getAge().equals(10);
+        assert result.getPassword().equals("pass_10");
     }
 
     /******** PART 2 - Person -> Account *******/
@@ -56,8 +53,8 @@ public class Function_01_Test {
         // TODO invoquer la fonction personToAccount
         Account result = null;
 
-        assertThat(result, hasProperty("owner", is(person)));
-        assertThat(result, hasProperty("balance", is(1000)));
+        assert result.getOwner().equals(person);
+        assert result.getBalance().equals(1000);
     }
 
 
@@ -76,8 +73,8 @@ public class Function_01_Test {
         // TODO invoquer la fonction intToAccountWithCompose avec l'entier 10
         Account result = null;
 
-        assertThat(result.getOwner(), hasProperty("firstname", is("first_10")));
-        assertThat(result, hasProperty("balance", is(1000)));
+        assert result.getOwner().getFirstname().equals("first_10");
+        assert result.getBalance().equals(1000);
     }
 
     /******** PART 4 - Integer -> Account avec andThen *******/
@@ -94,7 +91,7 @@ public class Function_01_Test {
         // TODO invoquer la fonction intToAccountWithAndThen avec l'entier 11
         Account result = null;
 
-        assertThat(result.getOwner(), hasProperty("firstname", is("first_11")));
-        assertThat(result, hasProperty("balance", is(1000)));
+        assert result.getOwner().getFirstname().equals("first_11");
+        assert result.getBalance().equals(1000);
     }
 }

@@ -7,9 +7,6 @@ import org.junit.Test;
 import java.util.List;
 import java.util.function.Consumer;
 
-import static org.hamcrest.Matchers.*;
-import static org.junit.Assert.*;
-
 /**
  * Exercice 5 - java.util.function.Consumer
  */

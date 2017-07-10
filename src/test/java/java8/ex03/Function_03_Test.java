@@ -5,9 +5,6 @@ import org.junit.Test;
 
 import java.util.function.BinaryOperator;
 
-import static org.hamcrest.Matchers.*;
-import static org.junit.Assert.*;
-
 /**
  * Exercice 03 - java.util.function.BinaryOperator
  */
@@ -32,10 +29,10 @@ public class Function_03_Test {
         // TODO compléter le test pour qu'il soit passant
         Person child = null;
 
-        assertThat(child, hasProperty("firstname", is("John Aline")));
-        assertThat(child, hasProperty("lastname", is("France")));
-        assertThat(child, hasProperty("age", is(0)));
-        assertThat(child, hasProperty("password", nullValue()));
+        assert child.getFirstname().equals("John Aline");
+        assert child.getLastname().equals("France");
+        assert child.getAge().equals(0);
+        assert child.getPassword() == null;
     }
 
 }

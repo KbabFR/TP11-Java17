@@ -4,9 +4,6 @@ import org.junit.Test;
 
 import java.util.function.IntBinaryOperator;
 
-import static org.hamcrest.Matchers.*;
-import static org.junit.Assert.*;
-
 /**
  * Exercice 07 - java.util.function.IntBinaryOperator
  */
@@ -29,7 +26,7 @@ public class Function_07_Test {
 
         String result = format(12, 13, "+", sum);
 
-        assertThat(result, is("(12+13)=25"));
+        assert result.equals("(12+13)=25");
     }
 
     // TODO définir substract afin que le test test_format_subtract() soit passant
@@ -40,7 +37,7 @@ public class Function_07_Test {
 
         String result = format(2, 3, "-", substract);
 
-        assertThat(result, is("(2-3)=-1"));
+        assert result.equals("(2-3)=-1");
     }
 }
 

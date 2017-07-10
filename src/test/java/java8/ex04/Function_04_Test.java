@@ -8,23 +8,20 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.function.Predicate;
 
-import static org.hamcrest.Matchers.*;
-import static org.junit.Assert.*;
-
 /**
  * Exercice 4 - java.util.function.Predicate
  */
 public class Function_04_Test {
 
     // tag::filterMethod[]
-   <T> List<T> filter(List<T> list, Predicate<T> predicate) {
-       List<T> result = new ArrayList<>();
-        for (T el: list) {
-            if(predicate.test(el)) {
+    <T> List<T> filter(List<T> list, Predicate<T> predicate) {
+        List<T> result = new ArrayList<>();
+        for (T el : list) {
+            if (predicate.test(el)) {
                 result.add(el);
             }
         }
-       return result;
+        return result;
     }
     // end::filterMethod[]
 
@@ -44,7 +41,7 @@ public class Function_04_Test {
         // TODO invoquer la méthode filter pour que le test soit passant
         List<Person> result = null;
 
-        assertThat(result,  hasSize(4));
+        assert result.size() == 4;
 
     }
 
@@ -70,10 +67,10 @@ public class Function_04_Test {
         // TODO chaîner les prédicats adult, lastnameIsFrance et firstnameIsArmor avec la méthode and
         List<Person> result = null;
 
-        assertThat(result,  hasSize(1));
-        assertThat(result.get(0), hasProperty("firstname", is("Armor")));
-        assertThat(result.get(0), hasProperty("lastname", is("France")));
-        assertThat(result.get(0), hasProperty("age", is(25)));
+        assert result.size() == 1;
+        assert result.get(0).getFirstname().equals("Armor");
+        assert result.get(0).getLastname().equals("France");
+        assert result.get(0).getAge().equals(25);
 
     }
 }

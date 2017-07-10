@@ -6,9 +6,6 @@ import org.junit.Test;
 
 import java.util.function.BiFunction;
 
-import static org.hamcrest.Matchers.*;
-import static org.junit.Assert.*;
-
 /**
  * Exercice 02 - java.util.function.BiFunction
  */
@@ -26,11 +23,11 @@ public class Function_02_Test {
         // TODO invoquer la fonction buildAccount pour que le test soit passant
         Account account = null;
 
-        assertThat(account, hasProperty("balance", is(500)));
-        assertThat(account.getOwner(), hasProperty("firstname", is("John")));
-        assertThat(account.getOwner(), hasProperty("lastname", is("France")));
-        assertThat(account.getOwner(), hasProperty("age", is(80)));
-        assertThat(account.getOwner(), hasProperty("password", is("pass")));
+        assert account.getBalance().equals(500);
+        assert account.getOwner().getFirstname().equals("John");
+        assert account.getOwner().getLastname().equals("France");
+        assert account.getOwner().getAge().equals(80);
+        assert account.getOwner().getPassword().equals("pass");
     }
 
 

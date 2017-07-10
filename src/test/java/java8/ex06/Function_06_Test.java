@@ -1,18 +1,13 @@
 package java8.ex06;
 
 
-import java8.data.Data;
 import java8.data.Person;
 import org.junit.Rule;
 import org.junit.Test;
 import org.junit.rules.ExpectedException;
 
-import java.util.List;
 import java.util.Objects;
 import java.util.function.Supplier;
-
-import static org.hamcrest.Matchers.*;
-import static org.junit.Assert.*;
 
 /**
  * Exercice 06 - java.util.function.Supplier
@@ -37,7 +32,7 @@ public class Function_06_Test {
         // TODO compléter le test unitaire pour qu'il soit passant
         String result = formatAge(null);
 
-        assertThat(result, is("[age=35]"));
+        assert result.equals("[age=35]");
     }
 
     @Test

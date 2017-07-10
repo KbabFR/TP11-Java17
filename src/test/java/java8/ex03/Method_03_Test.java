@@ -1,13 +1,11 @@
 package java8.ex03;
 
-import java8.data.Data;
-import java8.data.Person;
-import org.junit.Test;
-
 import java.util.List;
 
-import static org.hamcrest.Matchers.*;
-import static org.junit.Assert.*;
+import org.junit.Test;
+
+import java8.data.Data;
+import java8.data.Person;
 
 /**
  * Exercice 03 - Méthode statique
@@ -39,6 +37,6 @@ public class Method_03_Test {
         // TODO invoquer la méthode getDefaultInstance() pour que le test soit passant
         IDao result = null;
 
-        assertThat(result.findAll(), hasSize(20));
+        assert result.findAll().size() == 20;
     }
 }

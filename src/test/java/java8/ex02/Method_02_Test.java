@@ -1,13 +1,11 @@
 package java8.ex02;
 
-import java8.data.Data;
-import java8.data.Person;
-import org.junit.Test;
-
 import java.util.List;
 
-import static org.hamcrest.Matchers.*;
-import static org.junit.Assert.*;
+import org.junit.Test;
+
+import java8.data.Data;
+import java8.data.Person;
 
 /**
  * Exercice 02 - Redéfinition
@@ -50,6 +48,6 @@ public class Method_02_Test {
         // TODO invoquer la méthode format() pour que le test soit passant
         String result = null;
 
-        assertThat(result, is("DaoA[20 persons]"));
+        "DaoA[20 persons]".equals(result);
     }
 }

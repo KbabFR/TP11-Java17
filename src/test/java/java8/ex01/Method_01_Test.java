@@ -1,13 +1,12 @@
 package java8.ex01;
 
-import java8.data.Data;
-import java8.data.Person;
-import org.junit.Test;
-
 import java.util.List;
 
-import static org.hamcrest.Matchers.*;
-import static org.junit.Assert.*;
+import org.junit.Test;
+
+import java8.data.Data;
+import java8.data.Person;
+
 
 /**
  * Exercice 01 - Méthode par défaut
@@ -51,7 +50,7 @@ public class Method_01_Test {
         // TODO invoquer la méthode sumAge pour que le test soit passant
         int result = 0;
 
-        assertThat(result, is(210));
+        assert result == 210;
     }
 
     @Test
@@ -62,7 +61,7 @@ public class Method_01_Test {
         // TODO invoquer la méthode sumAge pour que le test soit passant
         int result = 0;
 
-        assertThat(result, is(5050));
+        assert result == 5050;
 
     }
 }

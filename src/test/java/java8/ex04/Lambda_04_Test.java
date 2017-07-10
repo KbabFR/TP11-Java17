@@ -11,6 +11,7 @@ import java.util.List;
 
 /**
  * Exercice 04 - FuncCollection
+ * Exercice synthèse des exercices précédents
  */
 public class Lambda_04_Test {
 
@@ -82,6 +83,9 @@ public class Lambda_04_Test {
                 // TODO vérifier que chaque compte a un solde à 1000.
                 // TODO vérifier que chaque titulaire de compte a un age > 50
                 .forEach(null);
+
+        // TODO à supprimer
+        assert false;
     }
     // end::test_filter_map_forEach[]
 
@@ -112,6 +116,9 @@ public class Lambda_04_Test {
                 .map(mapToAccount)
                 .forEach(verifyAccount);
         */
+
+        // TODO A supprimer
+        assert false;
     }
     // end::test_filter_map_forEach_with_vars[]
 

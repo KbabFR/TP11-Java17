@@ -5,11 +5,8 @@ import java8.data.Data;
 import java8.data.Person;
 import org.junit.Test;
 
-import java.util.ArrayList;
 import java.util.List;
 
-import static org.hamcrest.Matchers.*;
-import static org.junit.Assert.*;
 
 /**
  * Exercice 02 - Map
@@ -24,7 +21,7 @@ public class Lambda_02_Test {
 
     // tag::map[]
     private List<Account> map(List<Person> personList, PersonToAccountMapper mapper) {
-        // TODO implémenter la méthode
+        // TODO implémenter la méthode pour transformer une liste de personnes en liste de comptes
         return null;
     }
     // end::map[]
@@ -40,9 +37,11 @@ public class Lambda_02_Test {
         // TODO tous les objets comptes ont un solde à 100 par défaut
         List<Account> result = map(personList, null);
 
-        assertThat(result, hasSize(personList.size()));
-        assertThat(result, everyItem(hasProperty("balance", is(100))));
-        assertThat(result, everyItem(hasProperty("owner", notNullValue())));
+        assert result.size() == personList.size();
+        for (Account account : result) {
+            assert account.getBalance().equals(100);
+            assert account.getOwner() != null;
+        }
     }
     // end::test_map_person_to_account[]
 
@@ -55,9 +54,10 @@ public class Lambda_02_Test {
         // TODO transformer la liste de personnes en liste de prénoms
         List<String> result = null;
 
-        assertThat(result, hasSize(personList.size()));
-        assertThat(result, everyItem(instanceOf(String.class)));
-        assertThat(result, everyItem(startsWith("first")));
+        assert result.size() == personList.size();
+        for (String firstname : result) {
+            assert firstname.startsWith("first");
+        }
     }
     // end::test_map_person_to_firstname[]
 }

@@ -73,20 +73,6 @@ public class Stream_01_Test {
     }
 
     @Test
-    public void test_stream_filter_and_match() throws Exception {
-
-        List<Order> orders = new Data().getOrders();
-
-        // TODO récupérer toutes les commandes dont
-        // TODO le prénom du client est "Johnny"
-        // TODO dont au moins une pizza a un prix >= 1300
-        List<Order> result = null;
-
-        assertThat(result, hasSize(1));
-        assertThat(result.get(0), hasProperty("id", is(8)));
-    }
-
-    @Test
     public void test_stream_findFirst() throws Exception {
         List<Order> orders = new Data().getOrders();
 
@@ -94,33 +80,5 @@ public class Stream_01_Test {
         Optional<Order> result = null;
 
         assertThat(result.isPresent(), is(false));
-    }
-
-    @Test
-    public void test_stream_max() throws Exception {
-        List<Pizza> pizzas = new Data().getPizzas();
-
-        // TODO Trouver la pizza la plus chère
-        Optional<Pizza> result = null;
-
-        assertThat(result.isPresent(), is(true));
-        assertThat(result.get(), hasProperty("id", is(5)));
-        assertThat(result.get(), hasProperty("name", is("La Cannibale")));
-        assertThat(result.get(), hasProperty("price", is(1550)));
-    }
-
-    @Test
-    public void test_stream_min() throws Exception {
-        List<Order> orders = new Data().getOrders();
-
-        List<Pizza> pizzas = new Data().getPizzas();
-
-        // TODO Trouver la pizza la moins chère dont le prix est >= 950
-        Optional<Pizza> result = null;
-
-        assertThat(result.isPresent(), is(true));
-        assertThat(result.get(), hasProperty("id", is(3)));
-        assertThat(result.get(), hasProperty("name", is("La Reine")));
-        assertThat(result.get(), hasProperty("price", is(1000)));
     }
 }

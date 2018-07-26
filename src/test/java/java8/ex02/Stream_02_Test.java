@@ -28,20 +28,4 @@ public class Stream_02_Test {
 
         assertThat(result, hasSize(2));
     }
-
-    @Test
-    public void test_flatmap() throws Exception {
-
-        List<Order> orders = new Data().getOrders();
-
-        // TODO calculer les statistiques sur les prix des pizzas vendues
-        // TODO utiliser l'opération summaryStatistics
-        IntSummaryStatistics result = null;
-
-
-        assertThat(result.getSum(), is(10900L));
-        assertThat(result.getMin(), is(1000));
-        assertThat(result.getMax(), is(1375));
-        assertThat(result.getCount(), is(9L));
-    }
 }

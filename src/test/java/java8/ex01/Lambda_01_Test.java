@@ -4,6 +4,7 @@ import java8.data.Data;
 import java8.data.Person;
 import org.junit.Test;
 
+import java.util.ArrayList;
 import java.util.List;
 
 
@@ -20,8 +21,13 @@ public class Lambda_01_Test {
 
     // tag::filter[]
     private List<Person> filter(List<Person> persons, PersonPredicate predicate) {
-        // TODO implementer la méthode
-        return null;
+        List<Person> filteredPersons = new ArrayList<Person>();
+    	for (Person p: persons){
+        	if (predicate.test(p)){
+        		filteredPersons.add(p);
+        	}
+        }
+        return filteredPersons;
     }
     // end::filter[]
 

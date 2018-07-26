@@ -2,22 +2,28 @@ package java8.data;
 
 public class Account {
 
-    private Person owner;
-    private Integer balance;
+	private Person owner;
+	private Integer balance;
 
-    public Person getOwner() {
-        return owner;
-    }
+	public Account(Person owner, Integer balance) {
+		super();
+		this.owner = owner;
+		this.balance = balance;
+	}
 
-    public void setOwner(Person owner) {
-        this.owner = owner;
-    }
+	public Person getOwner() {
+		return owner;
+	}
 
-    public Integer getBalance() {
-        return balance;
-    }
+	public void setOwner(Person owner) {
+		this.owner = owner;
+	}
 
-    public void setBalance(Integer balance) {
-        this.balance = balance;
-    }
+	public Integer getBalance() {
+		return balance;
+	}
+
+	public void setBalance(Integer balance) {
+		this.balance = balance;
+	}
 }

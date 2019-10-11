@@ -1,82 +1,83 @@
 package java8.ex07;
 
+import java8.data.Data;
+import java8.data.domain.Order;
+import java8.data.domain.Pizza;
 import org.junit.Test;
 
+import java.util.ArrayList;
+import java.util.LinkedList;
+import java.util.List;
+import java.util.function.Consumer;
+import java.util.function.Function;
+import java.util.function.UnaryOperator;
 import java.util.logging.Logger;
-import java.util.stream.LongStream;
-import java.util.stream.Stream;
-
-import static org.hamcrest.Matchers.is;
-import static org.junit.Assert.assertThat;
+import java.util.stream.Collectors;
 
 /**
- * Exercice 07 - Stream Parallel - Effet de bord
+ * Exercice 08 - Stream Parallel - Collections
  */
 public class Stream_07_Test {
 
-    // Soit une implémentation impérative de la somme
-    private long imperativeSum(long n) {
-        long result = 0;
+    // Voici une méthode qui exécute 10 fois un traitement et retourne le meilleur temps (le plus court)
+    private long monitor(Runnable fn) {
 
-        for (long i = 1L; i < n; i++) {
-            result += i;
+        long fastest = Long.MAX_VALUE;
+
+        for (int i = 0; i < 10; i++) {
+            long start = System.nanoTime();
+            fn.run();
+            long end = System.nanoTime();
+            long duration = (end - start) / 1_000_000;
+            if (duration < fastest) fastest = duration;
         }
-        return result;
+        return fastest;
     }
 
-    // Soit une structure permettant de stocker le total
-    private class Accumulator {
-        private long total;
+    // TODO créer une fonction List<Pizza> -> List<Pizza>
+    // TODO seules les pizzas ayant un prix >= 1000 sont conservées
+    Function<List<Pizza>, List<Pizza>> filterPizza = null;
 
-        private void add(long value) {
-            total += value;
-        }
-    }
+    // TODO créer une fonction List<Pizza> -> List<Pizza>
+    // TODO seules les pizzas ayant un prix >= 1000 sont conservées
+    // TODO .parallel()
+    Function<List<Pizza>, List<Pizza>> parallelFilterPizza = null;
 
-    // TODO compléter la méthode pour que le calcul de la somme soit fait avec une instance d'Accumulator
-    private long sumWithAccumulator(long n) {
-        // TODO créer une instance de l'accumulateur (classe Accumulator)
-        Accumulator acc = null;
-        LongStream longStream = LongStream.rangeClosed(1, n - 1);
-
-        // TODO pour chaque élément de longStream, invoquer la méthode add de l'accumulateur (acc)
-
-        return acc.total;
-    }
-
-    // TODO exécuter le test pour valider l'implémentation de sumWithAccumulator
+    // TODO exécuter le test pour visualiser le temps d'exécution
     @Test
-    public void test_sumWithAccumulator() throws Exception {
-        Stream.of(1L, 1000L, 10000L).forEach(n -> {
-            long result1 = imperativeSum(n);
-            long result2 = sumWithAccumulator(n);
-
-            assertThat(result1, is(result2));
-        });
+    public void test_arraylist_vs_linkedlist() throws Exception {
+        arraylist_vs_linkedlist(filterPizza);
     }
 
-
-    // TODO reprendre le code de sumWithAccumulator et rendre le traitement parallèle (.parallel())
-    private long sumWithAccumulatorParallel(long n) {
-        return 0;
-    }
-
-    // TODO Exécuter le test
     // Que constatez-vous ?
+    // De mon côté :
+    // INFO: arrayList=21 ms
+    // INFO: linkedList=21 ms
+
+
+    // TODO exécuter le test pour visualiser le temps d'exécution
     @Test
-    public void test_sumWithAccumulatorParallel() throws Exception {
+    public void test_parallel_arraylist_vs_linkedlist() throws Exception {
+        arraylist_vs_linkedlist(parallelFilterPizza);
+    }
 
+    // Que constatez-vous ?
+    // INFO: arrayList=15 ms
+    // INFO: linkedList=83 ms
 
-        Stream.of(1L, 2L, 3L, 10L, 20L, 50L, 1000L, 100000L).forEach(n -> {
-            long result1 = imperativeSum(n);
-            long result2 = sumWithAccumulator(n);
-            long result3 = sumWithAccumulatorParallel(n);
+    public void arraylist_vs_linkedlist(Function<List<Pizza>, List<Pizza>> fn) throws Exception {
 
-            assertThat("n=" + n, result1, is(result2));
-            assertThat("n=" + n, result1, is(result3));
+        int nbPizzas = 1000000;
 
-            Logger.getGlobal().info("Test ok avec n=" + n);
-        });
+        List<Pizza> pizzaArrayList = new ArrayList<>(new Data().getPizzas(nbPizzas));
+        List<Pizza> pizzaLinkedList = new LinkedList<>(new Data().getPizzas(nbPizzas));
+
+        long arrayList = monitor(() -> fn.apply(pizzaArrayList));
+        long linkedList = monitor(() -> fn.apply(pizzaLinkedList));
+
+        Logger.getGlobal().info("arrayList=" + arrayList + " ms");
+        Logger.getGlobal().info("linkedList=" + linkedList + " ms");
+
     }
 
 }

@@ -2,139 +2,165 @@ package java8.ex05;
 
 import org.junit.Test;
 
-import java.io.IOException;
-import java.nio.file.Files;
-import java.nio.file.Path;
-import java.nio.file.Paths;
-import java.util.Map;
-import java.util.Optional;
+import java.util.function.Consumer;
+import java.util.function.UnaryOperator;
+import java.util.logging.Logger;
+import java.util.stream.IntStream;
+import java.util.stream.LongStream;
 import java.util.stream.Stream;
-
-import static java.util.stream.Collectors.*;
 
 import static org.hamcrest.Matchers.*;
 import static org.junit.Assert.*;
 
+
 /**
- * Exercice 5 - Files
+ * Exercice 06 - Stream Parallel
  */
 public class Stream_05_Test {
 
-    // Chemin vers un fichier de données des naissances
-    private static final String NAISSANCES_DEPUIS_1900_CSV = "./naissances_depuis_1900.csv";
+    private static final long NB = 10_000_000;
 
-    private static final String DATA_DIR = "./pizza-data";
+    // Soit une méthode impérative qui permet de construire une somme des chiffres de 1 à n
+    private long imperativeSum(long n) {
+        long result = 0;
 
-
-    // Structure modélisant les informations d'une ligne du fichier
-    class Naissance {
-        String annee;
-        String jour;
-        Integer nombre;
-
-        public Naissance(String annee, String jour, Integer nombre) {
-            this.annee = annee;
-            this.jour = jour;
-            this.nombre = nombre;
+        for (long i = 1L; i < n; i++) {
+            result += i;
         }
-
-        public String getAnnee() {
-            return annee;
-        }
-
-        public void setAnnee(String annee) {
-            this.annee = annee;
-        }
-
-        public String getJour() {
-            return jour;
-        }
-
-        public void setJour(String jour) {
-            this.jour = jour;
-        }
-
-        public Integer getNombre() {
-            return nombre;
-        }
-
-        public void setNombre(Integer nombre) {
-            this.nombre = nombre;
-        }
+        return result;
     }
 
+    // TODO compléter la méthode iterateSum
+    // TODO utiliser la méthode Stream.iterate
+    // TODO cette méthode doit produire le même résultat que imperativeSum
+    private long iterateSum(long n) {
+        return 0;
+    }
+
+    // TODO exécuter le test pour vérifier que les méthodes imperativeSum et iterateSum produisent le même résultat
+    @Test
+    public void test_imperativeSum_vs_iterateSum() {
+
+        Stream.of(1L, 1000L, NB).forEach(n -> {
+            long result1 = imperativeSum(n);
+            long result2 = iterateSum(n);
+
+            assertThat(result1, is(result2));
+        });
+    }
+
+    // TODO compléter la méthode parallelIterateSum
+    // TODO utiliser la méthode Stream.iterate
+    // TODO transformer en stream parallel (.parallel())
+    private long parallelIterateSum(long n) {
+        return 0;
+    }
+
+    // TODO exécuter le test pour vérifier que les méthodes imperativeSum, iterateSum et parallelIterateSum produisent le même résultat
+    @Test
+    public void test_imperativeSum_vs_iterateSum_vs_parallelIterateSum() {
+
+        Stream.of(1L, 1000L, NB).forEach(n -> {
+            long result1 = imperativeSum(n);
+            long result2 = iterateSum(n);
+            long result3 = parallelIterateSum(n);
+
+            assertThat(result1, is(result2));
+            assertThat(result1, is(result3));
+        });
+    }
+
+    // Essayons maintenant d'avoir une indication sur les performances des 3 traitements
+
+    // Voici une méthode qui exécute 10 fois un traitement et retourne le meilleur temps (le plus court)
+    private long monitor(Consumer<Long> fn, long n) {
+
+        long fastest = Long.MAX_VALUE;
+
+        for (int i = 0; i < 10; i++) {
+            long start = System.nanoTime();
+            fn.accept(n);
+            long end = System.nanoTime();
+            long duration = (end - start) / 1_000_000;
+            if (duration < fastest) fastest = duration;
+        }
+        return fastest;
+    }
+
+    // TODO compléter le test pour invoquer la méthode monitor dans chaque cas
+    // TODO visualiser les temps d'exécution
+    @Test
+    public void monitor_imperativeSum_vs_iterateSum_vs_parallelIterateSum() {
+        Logger.getAnonymousLogger().info("imperativeSum => " + /* TODO */" ms");
+        Logger.getAnonymousLogger().info("iterateSum => " + /* TODO */" ms");
+        Logger.getAnonymousLogger().info("parallelIterateSum => " + /* TODO */ " ms");
+    }
+
+    // Quel résultat obtenez-vous ?
+    // Sur ma machine, le gagnant est ... imperativeSum !
+    // INFO: imperativeSum => 3 ms
+    // INFO: iterateSum => 103 ms
+    // INFO: parallelIterateSum => 103 ms
+
+    // Ecrivons à présent, autrement cette somme
+
+    // TODO compléter la méthode rangeSum
+    // TODO utiliser la méthode LongStream.rangeClosed
+    private long rangeSum(long n) {
+        return 0;
+    }
+
+    // TODO vérifier que l'implémentation de rangeSum
+    @Test
+    public void test_imperativeSum_vs_rangeSum() {
+
+        Stream.of(1L, 20L, 1000L, NB).forEach(n -> {
+            long result1 = imperativeSum(n);
+            long result2 = rangeSum(n);
+
+            assertThat(result1, is(result2));
+        });
+    }
+
+    // TODO compléter la méthode rangeSum
+    // TODO utiliser la méthode LongStream.rangeClosed
+    // TODO transformer en stream parallel (.parallel())
+    private long rangeParallelSum(long n) {
+        return 0;
+    }
+
+    // TODO vérifier que l'implémentation de rangeParallelSum
+    @Test
+    public void test_imperativeSum_vs_rangeSum_vs_rangeParallelSum() {
+
+        Stream.of(1L, 20L, 1000L, NB).forEach(n -> {
+            long result1 = imperativeSum(n);
+            long result2 = rangeSum(n);
+            long result3 = rangeParallelSum(n);
+
+            assertThat(result1, is(result2));
+            assertThat(result1, is(result3));
+        });
+    }
 
     @Test
-    public void test_group() throws IOException {
-
-        // TODO utiliser la méthode java.nio.file.Files.lines pour créer un stream de lignes du fichier naissances_depuis_1900.csv
-        // Le bloc try(...) permet de fermer (close()) le stream après utilisation
-        try (Stream<String> lines = null) {
-
-            // TODO construire une MAP (clé = année de naissance, valeur = somme des nombres de naissance de l'année)
-            Map<String, Integer> result = null;
-
-
-            assertThat(result.get("2015"), is(8097));
-            assertThat(result.get("1900"), is(5130));
-        }
+    public void monitor_imperativeSum_vs_iterateSum_vs_parallelIterateSum_vs_rangeSum_vs_rangeParallelSum() {
+        Logger.getAnonymousLogger().info("imperativeSum => " + /* TODO */ " ms");
+        Logger.getAnonymousLogger().info("iterateSum => " + /* TODO */ " ms");
+        Logger.getAnonymousLogger().info("parallelIterateSum => " + /* TODO */ " ms");
+        Logger.getAnonymousLogger().info("rangeSum => " + /* TODO */" ms");
+        Logger.getAnonymousLogger().info("rangeParallelSum => " /* TODO */ + " ms");
     }
 
-    @Test
-    public void test_max() throws IOException {
+    // Quel résultat obtenez-vous ?
+    // Sur ma machine, le gagnant est ... rangeParallelSum !
+    // INFO: imperativeSum => 3 ms
+    // INFO: iterateSum => 100 ms
+    // INFO: parallelIterateSum => 90 ms
+    // INFO: rangeSum => 4 ms
+    // INFO: rangeParallelSum => 1 ms
 
-        // TODO utiliser la méthode java.nio.file.Files.lines pour créer un stream de lignes du fichier naissances_depuis_1900.csv
-        // Le bloc try(...) permet de fermer (close()) le stream après utilisation
-        try (Stream<String> lines = null) {
-
-            // TODO trouver l'année où il va eu le plus de nombre de naissance
-            Optional<Naissance> result = null;
-
-
-            assertThat(result.get().getNombre(), is(48));
-            assertThat(result.get().getJour(), is("19640228"));
-            assertThat(result.get().getAnnee(), is("1964"));
-        }
-    }
-
-    @Test
-    public void test_collectingAndThen() throws IOException {
-        // TODO utiliser la méthode java.nio.file.Files.lines pour créer un stream de lignes du fichier naissances_depuis_1900.csv
-        // Le bloc try(...) permet de fermer (close()) le stream après utilisation
-        try (Stream<String> lines = null) {
-
-            // TODO construire une MAP (clé = année de naissance, valeur = maximum de nombre de naissances)
-            // TODO utiliser la méthode "collectingAndThen" à la suite d'un "grouping"
-            Map<String, Naissance> result = null;
-
-            assertThat(result.get("2015").getNombre(), is(38));
-            assertThat(result.get("2015").getJour(), is("20150909"));
-            assertThat(result.get("2015").getAnnee(), is("2015"));
-
-            assertThat(result.get("1900").getNombre(), is(31));
-            assertThat(result.get("1900").getJour(), is("19000123"));
-            assertThat(result.get("1900").getAnnee(), is("1900"));
-        }
-    }
-
-    // Des données figurent dans le répertoire pizza-data
-    // TODO explorer les fichiers pour voir leur forme
-    // TODO compléter le test
-
-    @Test
-    public void test_pizzaData() throws IOException {
-        // TODO utiliser la méthode java.nio.file.Files.list pour parcourir un répertoire
-
-        // TODO trouver la pizza la moins chère
-        String pizzaNamePriceMin = null;
-
-        assertThat(pizzaNamePriceMin, is("L'indienne"));
-
-    }
-
-    // TODO Optionel
-    // TODO Créer un test qui exporte des données new Data().getPizzas() dans des fichiers
-    // TODO 1 fichier par pizza
-    // TODO le nom du fichier est de la forme ID.txt (ex. 1.txt, 2.txt)
-
+    // Les performances de traitements en parallèle dépendent de la capacité d'une structure à se décomposer.
+    // Stream.iterate() conçu pour générer un flux continue infinie ne se décompose pas alors qu'une structure finie comme
+    // LongStream.rangeClosed se décompose aisément.
 }

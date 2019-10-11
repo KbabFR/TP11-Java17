@@ -2,25 +2,19 @@ package java8.ex06;
 
 import org.junit.Test;
 
-import java.util.function.Consumer;
-import java.util.function.UnaryOperator;
 import java.util.logging.Logger;
-import java.util.stream.IntStream;
 import java.util.stream.LongStream;
 import java.util.stream.Stream;
 
-import static org.hamcrest.Matchers.*;
-import static org.junit.Assert.*;
-
+import static org.hamcrest.Matchers.is;
+import static org.junit.Assert.assertThat;
 
 /**
- * Exercice 06 - Stream Parallel
+ * Exercice 07 - Stream Parallel - Effet de bord
  */
 public class Stream_06_Test {
 
-    private static final long NB = 10_000_000;
-
-    // Soit une méthode impérative qui permet de construire une somme des chiffres de 1 à n
+    // Soit une implémentation impérative de la somme
     private long imperativeSum(long n) {
         long result = 0;
 
@@ -30,137 +24,59 @@ public class Stream_06_Test {
         return result;
     }
 
-    // TODO compléter la méthode iterateSum
-    // TODO utiliser la méthode Stream.iterate
-    // TODO cette méthode doit produire le même résultat que imperativeSum
-    private long iterateSum(long n) {
-        return 0;
-    }
+    // Soit une structure permettant de stocker le total
+    private class Accumulator {
+        private long total;
 
-    // TODO exécuter le test pour vérifier que les méthodes imperativeSum et iterateSum produisent le même résultat
-    @Test
-    public void test_imperativeSum_vs_iterateSum() {
-
-        Stream.of(1L, 1000L, NB).forEach(n -> {
-            long result1 = imperativeSum(n);
-            long result2 = iterateSum(n);
-
-            assertThat(result1, is(result2));
-        });
-    }
-
-    // TODO compléter la méthode parallelIterateSum
-    // TODO utiliser la méthode Stream.iterate
-    // TODO transformer en stream parallel (.parallel())
-    private long parallelIterateSum(long n) {
-        return 0;
-    }
-
-    // TODO exécuter le test pour vérifier que les méthodes imperativeSum, iterateSum et parallelIterateSum produisent le même résultat
-    @Test
-    public void test_imperativeSum_vs_iterateSum_vs_parallelIterateSum() {
-
-        Stream.of(1L, 1000L, NB).forEach(n -> {
-            long result1 = imperativeSum(n);
-            long result2 = iterateSum(n);
-            long result3 = parallelIterateSum(n);
-
-            assertThat(result1, is(result2));
-            assertThat(result1, is(result3));
-        });
-    }
-
-    // Essayons maintenant d'avoir une indication sur les performances des 3 traitements
-
-    // Voici une méthode qui exécute 10 fois un traitement et retourne le meilleur temps (le plus court)
-    private long monitor(Consumer<Long> fn, long n) {
-
-        long fastest = Long.MAX_VALUE;
-
-        for (int i = 0; i < 10; i++) {
-            long start = System.nanoTime();
-            fn.accept(n);
-            long end = System.nanoTime();
-            long duration = (end - start) / 1_000_000;
-            if (duration < fastest) fastest = duration;
+        private void add(long value) {
+            total += value;
         }
-        return fastest;
     }
 
-    // TODO compléter le test pour invoquer la méthode monitor dans chaque cas
-    // TODO visualiser les temps d'exécution
+    // TODO compléter la méthode pour que le calcul de la somme soit fait avec une instance d'Accumulator
+    private long sumWithAccumulator(long n) {
+        // TODO créer une instance de l'accumulateur (classe Accumulator)
+        Accumulator acc = null;
+        LongStream longStream = LongStream.rangeClosed(1, n - 1);
+
+        // TODO pour chaque élément de longStream, invoquer la méthode add de l'accumulateur (acc)
+
+        return acc.total;
+    }
+
+    // TODO exécuter le test pour valider l'implémentation de sumWithAccumulator
     @Test
-    public void monitor_imperativeSum_vs_iterateSum_vs_parallelIterateSum() {
-        Logger.getAnonymousLogger().info("imperativeSum => " + /* TODO */" ms");
-        Logger.getAnonymousLogger().info("iterateSum => " + /* TODO */" ms");
-        Logger.getAnonymousLogger().info("parallelIterateSum => " + /* TODO */ " ms");
-    }
-
-    // Quel résultat obtenez-vous ?
-    // Sur ma machine, le gagnant est ... imperativeSum !
-    // INFO: imperativeSum => 3 ms
-    // INFO: iterateSum => 103 ms
-    // INFO: parallelIterateSum => 103 ms
-
-    // Ecrivons à présent, autrement cette somme
-
-    // TODO compléter la méthode rangeSum
-    // TODO utiliser la méthode LongStream.rangeClosed
-    private long rangeSum(long n) {
-        return 0;
-    }
-
-    // TODO vérifier que l'implémentation de rangeSum
-    @Test
-    public void test_imperativeSum_vs_rangeSum() {
-
-        Stream.of(1L, 20L, 1000L, NB).forEach(n -> {
+    public void test_sumWithAccumulator() throws Exception {
+        Stream.of(1L, 1000L, 10000L).forEach(n -> {
             long result1 = imperativeSum(n);
-            long result2 = rangeSum(n);
+            long result2 = sumWithAccumulator(n);
 
             assertThat(result1, is(result2));
         });
     }
 
-    // TODO compléter la méthode rangeSum
-    // TODO utiliser la méthode LongStream.rangeClosed
-    // TODO transformer en stream parallel (.parallel())
-    private long rangeParallelSum(long n) {
+
+    // TODO reprendre le code de sumWithAccumulator et rendre le traitement parallèle (.parallel())
+    private long sumWithAccumulatorParallel(long n) {
         return 0;
     }
 
-    // TODO vérifier que l'implémentation de rangeParallelSum
+    // TODO Exécuter le test
+    // Que constatez-vous ?
     @Test
-    public void test_imperativeSum_vs_rangeSum_vs_rangeParallelSum() {
+    public void test_sumWithAccumulatorParallel() throws Exception {
 
-        Stream.of(1L, 20L, 1000L, NB).forEach(n -> {
+
+        Stream.of(1L, 2L, 3L, 10L, 20L, 50L, 1000L, 100000L).forEach(n -> {
             long result1 = imperativeSum(n);
-            long result2 = rangeSum(n);
-            long result3 = rangeParallelSum(n);
+            long result2 = sumWithAccumulator(n);
+            long result3 = sumWithAccumulatorParallel(n);
 
-            assertThat(result1, is(result2));
-            assertThat(result1, is(result3));
+            assertThat("n=" + n, result1, is(result2));
+            assertThat("n=" + n, result1, is(result3));
+
+            Logger.getGlobal().info("Test ok avec n=" + n);
         });
     }
 
-    @Test
-    public void monitor_imperativeSum_vs_iterateSum_vs_parallelIterateSum_vs_rangeSum_vs_rangeParallelSum() {
-        Logger.getAnonymousLogger().info("imperativeSum => " + /* TODO */ " ms");
-        Logger.getAnonymousLogger().info("iterateSum => " + /* TODO */ " ms");
-        Logger.getAnonymousLogger().info("parallelIterateSum => " + /* TODO */ " ms");
-        Logger.getAnonymousLogger().info("rangeSum => " + /* TODO */" ms");
-        Logger.getAnonymousLogger().info("rangeParallelSum => " /* TODO */ + " ms");
-    }
-
-    // Quel résultat obtenez-vous ?
-    // Sur ma machine, le gagnant est ... rangeParallelSum !
-    // INFO: imperativeSum => 3 ms
-    // INFO: iterateSum => 100 ms
-    // INFO: parallelIterateSum => 90 ms
-    // INFO: rangeSum => 4 ms
-    // INFO: rangeParallelSum => 1 ms
-
-    // Les performances de traitements en parallèle dépendent de la capacité d'une structure à se décomposer.
-    // Stream.iterate() conçu pour générer un flux continue infinie ne se décompose pas alors qu'une structure finie comme
-    // LongStream.rangeClosed se décompose aisément.
 }

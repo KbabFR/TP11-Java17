@@ -1,101 +1,50 @@
 package java8.ex01;
 
-import java8.data.Data;
-import java8.data.Person;
-import org.junit.Test;
+
+import static org.hamcrest.Matchers.is;
+import static org.junit.Assert.assertThat;
 
 import java.util.List;
 import java.util.Optional;
-import java.util.function.Predicate;
 
-import static org.hamcrest.Matchers.*;
-import static org.junit.Assert.*;
+import org.junit.Test;
+
+import java8.data.Data;
+import java8.data.Person;
 
 /**
- * Exercice 01 - Optional
+ * Exercice 02 - Filter, Map
  */
 public class Optional_01_Test {
-
-    class NotFountException extends RuntimeException {}
-
-
-    // tag::findMethod[]
-    <T> T find(List<T> list, Predicate<T> predicate) {
-        T result = null;
-
-        for (T p : list) {
-            if (predicate.test(p)) {
-                result = p;
-                break;
-            }
-        }
-
-        return result;
-    }
-    // end::findMethod[]
-
+	
+	class NotPresentException extends RuntimeException {
+		
+	}
 
     @Test
-    public void test_optional_found() throws Exception {
+    public void test_optional_ifPresent() throws Exception {
+    	
+    	List<Person> persons = Data.buildPersonList(100);
 
-        List<Person> personList = Data.buildPersonList(100);
-
-        // TODO invoquer la méthode find(List<T> list, Predicate<T> predicate)
-        // TODO age == 10
-        Optional<Person> result = null;
-
-        assertThat(result, instanceOf(Optional.class));
-        assertThat(result.isPresent(), is(true));
-        assertThat(result.get(), instanceOf(Person.class));
-        assertThat(result.get(), hasProperty("firstname", is("first_10")));
-        assertThat(result.get(), hasProperty("age", is(10)));
+        // TODO rechercher dans la liste ci-dessus la 1ère personne ayant 18 ans
+        // TODO utiliser la méthode "findFirst"
+        Optional<Person> optPerson = null;
+        assertThat(optPerson.isPresent(), is(true));
+        
+        // TODO afficher la personne en question si l'optional contient une personne
     }
 
-    @Test
-    public void test_optional_notfound() throws Exception {
+    @Test(expected=NotPresentException.class)
+    public void test_optional_notPresent() throws Exception {
+    	List<Person> persons = Data.buildPersonList(50);
 
+        // TODO rechercher dans la liste ci-dessus la 1ère personne ayant 75 ans
+        // TODO utiliser la méthode "findFirst"
+        Optional<Person> optPerson = null;
+        assertThat(optPerson.isPresent(), is(false));
+        
+        // TODO si la personne n'existe pas, jeter une exception NotPresentException
+        // TODO utiliser la méthode "orElseThrow"
 
-        List<Person> personList = Data.buildPersonList(100);
-
-        // TODO invoquer la méthode find(List<T> list, Predicate<T> predicate)
-        // TODO age == 400
-        Optional<Person> result = null;
-
-        assertThat(result, instanceOf(Optional.class));
-        assertThat(result.isPresent(), is(false));
     }
-
-    @Test(expected = NotFountException.class)
-    public void test_optional_notfound_throw_exception() throws Exception {
-
-
-        List<Person> personList = Data.buildPersonList(100);
-
-        // TODO invoquer la méthode find(List<T> list, Predicate<T> predicate)
-        // TODO age == 10 et firstname == "last_10"
-        Optional<Person> result = null;
-
-        // TODO Utiliser la méthode orElseThrow pour déclencher l'exception NotFountException si non trouvé
-    }
-
-    @Test
-    public void test_optional_notfound_with_default_value() throws Exception {
-
-
-        List<Person> personList = Data.buildPersonList(100);
-
-        Person defaultValue = new Person();
-        defaultValue.setFirstname("DEFAULT");
-        defaultValue.setLastname("DEFAULT");
-
-        // TODO invoquer la méthode find(List<T> list, Predicate<T> predicate, T defaultValue)
-        // TODO predicate => age == 400
-        Person result = null;
-
-        assertThat(result, notNullValue());
-        assertThat(result, hasProperty("firstname", is("DEFAULT")));
-        assertThat(result, hasProperty("lastname", is("DEFAULT")));
-    }
-
-
 }

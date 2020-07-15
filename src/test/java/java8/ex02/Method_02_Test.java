@@ -48,6 +48,6 @@ public class Method_02_Test {
         // TODO invoquer la méthode format() pour que le test soit passant
         String result = null;
 
-        "DaoA[20 persons]".equals(result);
+        assert "DaoA[20 persons]".equals(result);
     }
 }

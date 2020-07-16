@@ -56,42 +56,4 @@ public class Function_01_Test {
         assert result.getOwner().equals(person);
         assert result.getBalance().equals(1000);
     }
-
-
-    /******** PART 3 - Integer -> Account avec compose *******/
-
-    // tag::intToAccountWithCompose[]
-    // TODO Compléter la définition de cette fonction
-    // TODO Utiliser la méthode compose pour réutiliser les fonctions intToPerson et personToAccount
-    private Function<Integer, Account> intToAccountWithCompose = null;
-    // end::intToAccountWithCompose[]
-
-
-    @Test
-    public void test_intToAccount_with_Compose() throws Exception {
-
-        // TODO invoquer la fonction intToAccountWithCompose avec l'entier 10
-        Account result = null;
-
-        assert result.getOwner().getFirstname().equals("first_10");
-        assert result.getBalance().equals(1000);
-    }
-
-    /******** PART 4 - Integer -> Account avec andThen *******/
-
-    // tag::intToAccountWithAndThen[]
-    // TODO Compléter la définition de cette fonction
-    // TODO Utiliser la méthode andThen pour réutiliser les fonctions intToPerson et personToAccount
-    private Function<Integer, Account> intToAccountWithAndThen = null;
-    // end::intToAccountWithAndThen[]
-
-    @Test
-    public void test_intToAccount_with_AndThen() throws Exception {
-
-        // TODO invoquer la fonction intToAccountWithAndThen avec l'entier 11
-        Account result = null;
-
-        assert result.getOwner().getFirstname().equals("first_11");
-        assert result.getBalance().equals(1000);
-    }
 }

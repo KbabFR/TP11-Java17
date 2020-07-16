@@ -50,12 +50,12 @@ public class Function_04_Test {
     // tag::predicateand[]
     // TODO compléter la fonction
     // TODO le prédicat vérifie que le nom est "France"
-    Predicate<Person> lastnameIsFrance = p -> p.getLastname().equals("France");
+    Predicate<Person> lastnameIsFrance = null;
 
 
     // TODO compléter la fonction
     // TODO le prédicat vérifie que le prénom est "Armor"
-    Predicate<Person> firstnameIsArmor = p -> p.getFirstname().equals("Armor");
+    Predicate<Person> firstnameIsArmor = null;
     // end::predicateand[]
 
     @Test

@@ -18,8 +18,8 @@
                 <plugin>
                     <artifactId>maven-compiler-plugin</artifactId>
                     <configuration>
-                        <source>1.8</source>
-                        <target>1.8</target>
+                        <source>1.11</source>
+                        <target>1.11</target>
                     </configuration>
                 </plugin>
             </plugins>
@@ -35,7 +35,7 @@
         <dependency>
             <groupId>commons-codec</groupId>
             <artifactId>commons-codec</artifactId>
-            <version>1.10</version>
+            <version>1.15</version>
         </dependency>
     </dependencies>
 

@@ -30,7 +30,7 @@ public class Stream_01_Test {
 	}
 
 	@Test
-	public void test_stream_filter_count() throws Exception {
+	public void test_stream_filter_collect_counting() throws Exception {
 		List<Pizza> pizzas = new Data().getPizzas();
 
 		// TODO compter le nombre de pizzas dont le prix est >= 1300
@@ -88,5 +88,19 @@ public class Stream_01_Test {
 		Optional<Order> result = null;
 
 		assertThat(result.isPresent(), is(false));
+	}
+
+	/**
+	 * FACULTATIVE : PLUS DURE !!
+	 */
+	@Test
+	public void test_stream_filter_adv() throws Exception {
+		List<Order> orders = new Data().getOrders();
+
+		// TODO récupérer la liste de toutes les commandes qui contiennent au moins une
+		// pizza Pépéroni
+		List<Order> result = null;
+
+		assertThat(result, hasSize(3));
 	}
 }

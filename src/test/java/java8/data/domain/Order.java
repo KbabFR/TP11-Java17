@@ -5,55 +5,61 @@ import java.util.List;
 
 public class Order {
 
-    private Integer id;
-    private Customer customer;
-    private List<Pizza> pizzas = new ArrayList<>();
+	private Integer id;
+	private Customer customer;
+	private List<Pizza> pizzas = new ArrayList<>();
 
-    public Order() {
-    }
+	public Order() {
+	}
 
-    public Order(Integer id, Customer customer, List<Pizza> pizzas) {
-        this.id = id;
-        this.customer = customer;
-        this.pizzas = pizzas;
-    }
+	public Order(Integer id, Customer customer, List<Pizza> pizzas) {
+		this.id = id;
+		this.customer = customer;
+		this.pizzas = pizzas;
+	}
 
-    public Integer getId() {
-        return id;
-    }
+	public double getPrice() {
+		return pizzas.stream().mapToDouble(p -> p.getPrice()).sum();
+	}
 
-    public void setId(Integer id) {
-        this.id = id;
-    }
+	public Integer getId() {
+		return id;
+	}
 
-    public Customer getCustomer() {
-        return customer;
-    }
+	public void setId(Integer id) {
+		this.id = id;
+	}
 
-    public void setCustomer(Customer customer) {
-        this.customer = customer;
-    }
+	public Customer getCustomer() {
+		return customer;
+	}
 
-    public List<Pizza> getPizzas() {
-        return new ArrayList<>(pizzas);
-    }
+	public void setCustomer(Customer customer) {
+		this.customer = customer;
+	}
 
-    public void setPizzas(List<Pizza> pizzas) {
-        this.pizzas = new ArrayList<>(pizzas);
-    }
+	public List<Pizza> getPizzas() {
+		return new ArrayList<>(pizzas);
+	}
 
-    @Override
-    public boolean equals(Object o) {
-        if (this == o) return true;
-        if (o == null || getClass() != o.getClass()) return false;
+	public void setPizzas(List<Pizza> pizzas) {
+		this.pizzas = new ArrayList<>(pizzas);
+	}
 
-        Order order = (Order) o;
+	@Override
+	public boolean equals(Object o) {
+		if (this == o)
+			return true;
+		if (o == null || getClass() != o.getClass())
+			return false;
 
-        return id != null ? id.equals(order.id) : order.id == null;
-    }
+		Order order = (Order) o;
 
-    @Override
-    public int hashCode() {
-        return id != null ? id.hashCode() : 0;
-    }
+		return id != null ? id.equals(order.id) : order.id == null;
+	}
+
+	@Override
+	public int hashCode() {
+		return id != null ? id.hashCode() : 0;
+	}
 }
